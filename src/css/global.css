@@ -2,9 +2,6 @@ body{
     width: 75%;
     margin: auto;
 }
-textarea{
-    width: 100%;
-}
 .spinner-item{
     width: min-content;
     margin: auto;

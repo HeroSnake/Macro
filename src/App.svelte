@@ -51,7 +51,18 @@
 </script>
 
 <body>
-	<textarea on:keyup={debounce} bind:value={ing} id="story" name="story" />
+	<form class="w-full max-w-sm">
+		<div class="flex items-center border-b border-teal-500 py-2">
+			<textarea
+				class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+				placeholder="Ingredients"
+				on:keyup={debounce}
+				bind:value={ing}
+				id="story"
+				name="story"
+			/>
+		</div>
+	</form>
 	{#if result}
 		<div>
 			<b>{result.calories}</b> Cal - <b>{result.totalWeight}</b> g
