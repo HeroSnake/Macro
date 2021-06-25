@@ -1,51 +1,57 @@
 <script>
-	import Icon from 'svelte-awesome';
-	import { faSearch } from '@fortawesome/free-solid-svg-icons';
-	import { Jumper } from 'svelte-loading-spinners';
-	
-	let result,timer = null;
+	import Icon from "svelte-awesome";
+	import { faSearch } from "@fortawesome/free-solid-svg-icons";
+	import { Jumper } from "svelte-loading-spinners";
+	import "./css/global.css";
+
+	let result,
+		timer = null;
 	let ing = "100 g rice, 2 banana";
 	let isLoading = false;
 	let specs = [
-		["Fat","#d4b924"],
-		["Carbs","#81a695"],
-		["Fiber","#6dd424"],
-		["Protein","#d45924"]
+		["Fat", "#d4b924"],
+		["Carbs", "#81a695"],
+		["Fiber", "#6dd424"],
+		["Protein", "#d45924"],
 	];
-	
-	const debounce = v => {
+
+	const debounce = (v) => {
 		clearTimeout(timer);
 		timer = setTimeout(getData, 750);
-	}
-	
+	};
+
 	const getData = async () => {
-			result = null
-		if (!ing) { 
+		result = null;
+		if (!ing) {
 			return;
 		}
 		isLoading = true;
 		ing = ing.split(",");
-		let json = {"ingr": ing };
-		result = await fetch('https://api.edamam.com/api/nutrition-details?app_id=690348ca&app_key=bedbeeb0e08003fce6d13408ccaf231d', { 
-			method: 'POST', 
-			headers: new Headers({
-	 			"Content-Type": "application/json"
-			}),
-			body: JSON.stringify(json)
-		})
-			.then(e => {
-			if (e.status !== 200) {
-				return null
+		let json = { ingr: ing };
+		result = await fetch(
+			"https://api.edamam.com/api/nutrition-details?app_id=690348ca&app_key=bedbeeb0e08003fce6d13408ccaf231d",
+			{
+				method: "POST",
+				headers: new Headers({
+					"Content-Type": "application/json",
+				}),
+				body: JSON.stringify(json),
 			}
-			return e.json()
-		})
-		.catch(() => null )
-		
+		)
+			.then((e) => {
+				if (e.status !== 200) {
+					return null;
+				}
+				return e.json();
+			})
+			.catch(() => null);
+
 		isLoading = false;
-	}
+	};
 </script>
+
 <body>
-	<textarea on:keyup={debounce} bind:value={ing} id="story" name="story"></textarea>
+	<textarea on:keyup={debounce} bind:value={ing} id="story" name="story" />
 	{#if result}
 		<div>
 			<b>{result.calories}</b> Cal - <b>{result.totalWeight}</b> g
@@ -54,13 +60,17 @@
 			{#each Object.values(result.totalNutrients) as Nutrient}
 				{#each specs as spec}
 					{#if spec[0] == Nutrient.label}
-						<div class="infobulle" style="background-color:{spec[1]}">
+						<div
+							class="infobulle"
+							style="background-color:{spec[1]}"
+						>
 							<h2>
 								{Nutrient.label}
 							</h2>
 							<p>
-								{parseFloat(Nutrient.quantity).toFixed(2)} {Nutrient.unit}
-							</p> 
+								{parseFloat(Nutrient.quantity).toFixed(2)}
+								{Nutrient.unit}
+							</p>
 						</div>
 					{/if}
 				{/each}
@@ -89,74 +99,26 @@
 		</div>
 		{#each Object.values(result.totalNutrients) as Nutrient}
 			{#if Nutrient.quantity > 0}
-			<div>
-				<b>{Nutrient.label}</b> : {parseFloat(Nutrient.quantity).toFixed(2)} {Nutrient.unit}
-			</div>
+				<div>
+					<b>{Nutrient.label}</b> : {parseFloat(
+						Nutrient.quantity
+					).toFixed(2)}
+					{Nutrient.unit}
+				</div>
 			{/if}
 		{/each}
 	{/if}
 	{#if isLoading}
 		<div class="spinner-item">
-			<Jumper size="60" color="#FF3E00" unit="px" duration="1.5s"></Jumper>
+			<Jumper size="60" color="#FF3E00" unit="px" duration="1.5s" />
 		</div>
 	{/if}
 </body>
 
-<style>
-	body{
-		width: 75%;
-		margin: auto;
-	}
-	textarea{
-		width: 100%;
-	}
-	.spinner-item{
-		width: min-content;
-		margin: auto;
-	}
-	.labels{
-		width: min-content;
-		padding: 3px;
-		font-size: 15px;
-		border-radius: 10px;
-		color: white;
-		margin: 0 5px 5px 0;
-	}
-	.dietLabels{
-		background-color: #e3b32a;
-		border: 1px solid #e3b32a;
-	}
-	.healthLabels{
-		background-color: #00b32a;
-		border: 1px solid #00b32a;
-	}
-	.cautions{
-		background-color: #ee2712;
-		border: 1px solid #ee2712;
-	}
-	div.scrollmenu {
-		overflow: auto;
-		white-space: nowrap;
-	}
-	div.scrollmenu div {
-		display: inline-block;
-		color: white;
-		text-align: center;
-		text-decoration: none;
-	}
-	.container-flex{
-		display: flex;
-		justify-content: center;
-	}
-	.infobulle{
-		text-align: center;
-		background-color: #ba9f12;
-		color: white;
-		flex-direction: row;
-		border-radius: 50%;
-		margin: 10px;
-		padding: 4px;
-		width: 100px;
-		height: 100px;
-	}
+<slot />
+
+<style global lang="postcss">
+	@tailwind base;
+	@tailwind components;
+	@tailwind utilities;
 </style>
