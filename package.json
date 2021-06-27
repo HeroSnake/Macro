@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.7.2",
+    "chart.js": "^3.3.2",
     "sirv-cli": "^1.0.0"
   }
 }

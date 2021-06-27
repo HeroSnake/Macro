@@ -2,24 +2,61 @@
 	import Icon from "svelte-awesome";
 	import { faSearch } from "@fortawesome/free-solid-svg-icons";
 	import { Jumper } from "svelte-loading-spinners";
+	import Chart from "./Chart.svelte";
+	import Labels from "./Labels.svelte";
+	import Macros from "./Macros.svelte";
+	import Infos from "./Infos.svelte";
 	import "./css/global.css";
 
 	let result,
 		timer = null;
 	let ing = "100 g rice, 2 banana";
 	let isLoading = false;
-	let specs = [
-		["Fat", "#d4b924"],
-		["Carbs", "#81a695"],
-		["Fiber", "#6dd424"],
-		["Protein", "#d45924"],
-	];
-
-	const debounce = (v) => {
+	let specs = [];
+	const getRandomColor = () => {
+		var letters = "0123456789ABCDEF";
+		var color = "#";
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	};
+	const mapNutriments = () => {
+		specs = [
+			["Fat & Saturated", "#d4b924", 0],
+			["Carbs & Sugars", "#81a695", 0],
+			["Fiber", "#6dd424", 0],
+			["Protein", "#d45924", 0],
+			["Others", "#e7d3fe", 0],
+		];
+		for (const nutrient of Object.values(result.totalNutrients)) {
+			if (nutrient.unit != "kcal") {
+				let other = true;
+				let quantity = parseFloat(nutrient.quantity);
+				switch (nutrient.unit) {
+					case "mg":
+						quantity = quantity / 1000;
+						break;
+					case "µg":
+						quantity = quantity / 1000000;
+						break;
+				}
+				specs.forEach((spec) => {
+					if (spec[0].includes(nutrient.label)) {
+						other = false;
+						spec[2] += quantity;
+					}
+				});
+				if (other && nutrient.label != "Water") {
+					specs[4][2] += quantity;
+				}
+			}
+		}
+	};
+	const debounce = () => {
 		clearTimeout(timer);
 		timer = setTimeout(getData, 750);
 	};
-
 	const getData = async () => {
 		result = null;
 		if (!ing) {
@@ -45,88 +82,42 @@
 				return e.json();
 			})
 			.catch(() => null);
-
+		mapNutriments();
 		isLoading = false;
 	};
+	getData();
 </script>
 
-<body>
-	<form class="w-full max-w-sm">
-		<div class="flex items-center border-b border-teal-500 py-2">
-			<textarea
-				class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-				placeholder="Ingredients"
-				on:keyup={debounce}
-				bind:value={ing}
-				id="story"
-				name="story"
-			/>
-		</div>
-	</form>
-	{#if result}
-		<div>
-			<b>{result.calories}</b> Cal - <b>{result.totalWeight}</b> g
-		</div>
-		<div class="container-flex">
-			{#each Object.values(result.totalNutrients) as Nutrient}
-				{#each specs as spec}
-					{#if spec[0] == Nutrient.label}
-						<div
-							class="infobulle"
-							style="background-color:{spec[1]}"
-						>
-							<h2>
-								{Nutrient.label}
-							</h2>
-							<p>
-								{parseFloat(Nutrient.quantity).toFixed(2)}
-								{Nutrient.unit}
-							</p>
-						</div>
-					{/if}
-				{/each}
-			{/each}
-		</div>
-		<div class="scrollmenu">
-			{#each result.dietLabels as dietLabel}
-				<div class="labels dietLabels">
-					{dietLabel}
-				</div>
-			{/each}
-		</div>
-		<div class="scrollmenu">
-			{#each result.healthLabels as healthLabel}
-				<div class="labels healthLabels">
-					{healthLabel}
-				</div>
-			{/each}
-		</div>
-		<div class="scrollmenu">
-			{#each result.cautions as caution}
-				<div class="labels cautions">
-					{caution}
-				</div>
-			{/each}
-		</div>
-		{#each Object.values(result.totalNutrients) as Nutrient}
-			{#if Nutrient.quantity > 0}
-				<div>
-					<b>{Nutrient.label}</b> : {parseFloat(
-						Nutrient.quantity
-					).toFixed(2)}
-					{Nutrient.unit}
-				</div>
-			{/if}
-		{/each}
-	{/if}
-	{#if isLoading}
-		<div class="spinner-item">
-			<Jumper size="60" color="#FF3E00" unit="px" duration="1.5s" />
-		</div>
-	{/if}
-</body>
+<form class="w-full">
+	<div class="flex items-center border-b border-teal-500 py-2">
+		<textarea
+			class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none text-center focus:underline text-xl"
+			placeholder="Ingredients"
+			on:keyup={debounce}
+			bind:value={ing}
+			id="ingredients"
+			name="ingredients"
+		/>
+	</div>
+</form>
 
-<slot />
+{#if result}
+	<div class="text-center text-3xl leading-loose">
+		<Infos {result} />
+	</div>
+	<Labels {result} />
+	<div class="lg:flex lg:items-stretch">
+		<div class="w-full flex items-center">
+			<Chart {result} {specs} />
+		</div>
+		<div class="w-full text-center"><Macros {result} /></div>
+	</div>
+{/if}
+{#if isLoading}
+	<div class="spinner-item">
+		<Jumper size="60" color="#FF3E00" unit="px" duration="1.5s" />
+	</div>
+{/if}
 
 <style global lang="postcss">
 	@tailwind base;

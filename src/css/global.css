@@ -1,53 +1,17 @@
-body{
-    width: 75%;
-    margin: auto;
-}
 .spinner-item{
     width: min-content;
     margin: auto;
 }
-.labels{
-    width: min-content;
-    padding: 3px;
-    font-size: 15px;
-    border-radius: 10px;
-    color: white;
-    margin: 0 5px 5px 0;
-}
-.dietLabels{
-    background-color: #e3b32a;
-    border: 1px solid #e3b32a;
-}
-.healthLabels{
-    background-color: #00b32a;
-    border: 1px solid #00b32a;
-}
-.cautions{
-    background-color: #ee2712;
-    border: 1px solid #ee2712;
-}
 div.scrollmenu {
     overflow: auto;
     white-space: nowrap;
+    text-align: center;
 }
 div.scrollmenu div {
     display: inline-block;
-    color: white;
-    text-align: center;
-    text-decoration: none;
+    margin: 0 10px 10px 0;
 }
 .container-flex{
     display: flex;
     justify-content: center;
-}
-.infobulle{
-    text-align: center;
-    background-color: #ba9f12;
-    color: white;
-    flex-direction: row;
-    border-radius: 50%;
-    margin: 10px;
-    padding: 4px;
-    width: 100px;
-    height: 100px;
 }
