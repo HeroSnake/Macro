@@ -10,7 +10,7 @@
             "purpose": "any maskable"
         }
     ],
-    "start_url": "https://macro.vercel.app/",
+    "start_url": "https://macro-herosnake.vercel.app/",
     "background_color": "white",
     "display": "standalone",
     "theme_color": "white"
