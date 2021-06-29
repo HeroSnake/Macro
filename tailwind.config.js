@@ -1,7 +1,8 @@
 module.exports = {
     purge: {
         enabled: false,
-        content: ['./public/index.html', './src/**/*.svelte', './src/**/*.js'],
+        content: ['./public/index.html', './src/**/*.svelte'],
+        whitelist: ['mode-dark'],
         options: {
             defaultExtractor: content => [
                 ...(content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []),
@@ -11,10 +12,14 @@ module.exports = {
     },
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
+        darkSelector: '.mode-dark'
     },
     variants: {
-        extend: {},
+        backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'dark-even', 'dark-odd'],
+        borderColor: ['dark', 'dark-disabled', 'dark-focus', 'dark-focus-within'],
+        textColor: ['dark', 'dark-hover', 'dark-active', 'dark-placeholder']
     },
-    plugins: [],
+    plugins: [
+        require('tailwindcss-dark-mode')()
+    ],
 }

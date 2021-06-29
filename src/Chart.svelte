@@ -1,7 +1,7 @@
 <script>
     import Chart from "chart.js/auto";
 
-    export let specs;
+    export let specs, dark;
 
     let specsTitle = specs.map(function (x) {
         return x[0];
@@ -13,9 +13,9 @@
         return x[2];
     });
 
-    var donutChart = null;
+    var chart = null;
 
-    let donutConfig = {
+    let config = {
         type: "doughnut",
         data: {
             labels: specsTitle,
@@ -25,6 +25,7 @@
                     data: specsValues,
                     backgroundColor: specsColors,
                     hoverOffset: 6,
+                    borderColor: dark ? "#1f2937" : "white",
                 },
             ],
         },
@@ -36,22 +37,26 @@
                         font: {
                             family: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
                         },
+                        color: dark ? "white" : "black",
                     },
                 },
             },
         },
     };
-
-    const setChart = () => {
-        donutChart = new Chart(
-            document.getElementById("donutChart"),
-            donutConfig
-        );
-        // donutChart.canvas.parentNode.style.height =
-        //     donutChart.canvas.parentNode.style.width = "300px";
+    let updateCharts = (chart) => {
+        if(chart){
+            chart.options.plugins.legend.labels.color = dark ? "white" : "black";
+            chart.data.datasets[0].borderColor = dark ? "#1f2937" : "white";
+            chart.update();
+        }else{
+            return false;
+        }
     };
-
+    const setChart = () => {
+        chart = new Chart(document.getElementById("chart"), config);
+    };
+    $: dark,updateCharts(chart);
     setTimeout(setChart, 20);
 </script>
 
-<canvas id="donutChart" />
+<canvas id="chart" />

@@ -13,7 +13,7 @@ body {
 }
 
 a {
-	color: rgb(0,100,200);
+	color: rgb(0, 100, 200);
 	text-decoration: none;
 }
 
@@ -22,7 +22,7 @@ a:hover {
 }
 
 a:visited {
-	color: rgb(0,80,160);
+	color: rgb(0, 80, 160);
 }
 
 label {
@@ -60,4 +60,9 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+input:checked~.dot {
+	transform: translateX(100%);
+	background-color: #FF3E00;
 }

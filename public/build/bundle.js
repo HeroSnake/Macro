@@ -15509,8 +15509,8 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			canvas = element("canvas");
-    			attr_dev(canvas, "id", "donutChart");
-    			add_location(canvas, file$4, 56, 0, 1463);
+    			attr_dev(canvas, "id", "chart");
+    			add_location(canvas, file$4, 61, 0, 1737);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -15540,7 +15540,7 @@ var app = (function () {
     function instance$4($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("Chart", slots, []);
-    	let { specs } = $$props;
+    	let { specs } = $$props, { dark } = $$props;
 
     	let specsTitle = specs.map(function (x) {
     		return x[0];
@@ -15554,9 +15554,9 @@ var app = (function () {
     		return x[2];
     	});
 
-    	var donutChart = null;
+    	var chart = null;
 
-    	let donutConfig = {
+    	let config = {
     		type: "doughnut",
     		data: {
     			labels: specsTitle,
@@ -15565,7 +15565,8 @@ var app = (function () {
     					label: "Food Data Donut",
     					data: specsValues,
     					backgroundColor: specsColors,
-    					hoverOffset: 6
+    					hoverOffset: 6,
+    					borderColor: dark ? "#1f2937" : "white"
     				}
     			]
     		},
@@ -15576,20 +15577,30 @@ var app = (function () {
     						// This more specific font property overrides the global property
     						font: {
     							family: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-    						}
+    						},
+    						color: dark ? "white" : "black"
     					}
     				}
     			}
     		}
     	};
 
+    	let updateCharts = chart => {
+    		if (chart) {
+    			chart.options.plugins.legend.labels.color = dark ? "white" : "black";
+    			chart.data.datasets[0].borderColor = dark ? "#1f2937" : "white";
+    			chart.update();
+    		} else {
+    			return false;
+    		}
+    	};
+
     	const setChart = () => {
-    		donutChart = new Chart(document.getElementById("donutChart"), donutConfig);
-    	}; // donutChart.canvas.parentNode.style.height =
-    	//     donutChart.canvas.parentNode.style.width = "300px";
+    		$$invalidate(2, chart = new Chart(document.getElementById("chart"), config));
+    	};
 
     	setTimeout(setChart, 20);
-    	const writable_props = ["specs"];
+    	const writable_props = ["specs", "dark"];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Chart> was created with unknown prop '${key}'`);
@@ -15597,39 +15608,50 @@ var app = (function () {
 
     	$$self.$$set = $$props => {
     		if ("specs" in $$props) $$invalidate(0, specs = $$props.specs);
+    		if ("dark" in $$props) $$invalidate(1, dark = $$props.dark);
     	};
 
     	$$self.$capture_state = () => ({
     		Chart,
     		specs,
+    		dark,
     		specsTitle,
     		specsColors,
     		specsValues,
-    		donutChart,
-    		donutConfig,
+    		chart,
+    		config,
+    		updateCharts,
     		setChart
     	});
 
     	$$self.$inject_state = $$props => {
     		if ("specs" in $$props) $$invalidate(0, specs = $$props.specs);
+    		if ("dark" in $$props) $$invalidate(1, dark = $$props.dark);
     		if ("specsTitle" in $$props) specsTitle = $$props.specsTitle;
     		if ("specsColors" in $$props) specsColors = $$props.specsColors;
     		if ("specsValues" in $$props) specsValues = $$props.specsValues;
-    		if ("donutChart" in $$props) donutChart = $$props.donutChart;
-    		if ("donutConfig" in $$props) donutConfig = $$props.donutConfig;
+    		if ("chart" in $$props) $$invalidate(2, chart = $$props.chart);
+    		if ("config" in $$props) config = $$props.config;
+    		if ("updateCharts" in $$props) $$invalidate(7, updateCharts = $$props.updateCharts);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [specs];
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*dark, chart*/ 6) {
+    			(updateCharts(chart));
+    		}
+    	};
+
+    	return [specs, dark, chart];
     }
 
     class Chart_1 extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$4, create_fragment$4, safe_not_equal, { specs: 0 });
+    		init(this, options, instance$4, create_fragment$4, safe_not_equal, { specs: 0, dark: 1 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -15644,6 +15666,10 @@ var app = (function () {
     		if (/*specs*/ ctx[0] === undefined && !("specs" in props)) {
     			console.warn("<Chart> was created without expected prop 'specs'");
     		}
+
+    		if (/*dark*/ ctx[1] === undefined && !("dark" in props)) {
+    			console.warn("<Chart> was created without expected prop 'dark'");
+    		}
     	}
 
     	get specs() {
@@ -15651,6 +15677,14 @@ var app = (function () {
     	}
 
     	set specs(value) {
+    		throw new Error("<Chart>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get dark() {
+    		throw new Error("<Chart>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set dark(value) {
     		throw new Error("<Chart>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -16281,7 +16315,7 @@ var app = (function () {
     const { Object: Object_1 } = globals;
     const file = "src/App.svelte";
 
-    // (104:0) {#if result}
+    // (133:0) {#if result}
     function create_if_block_1(ctx) {
     	let div0;
     	let infos;
@@ -16307,7 +16341,10 @@ var app = (function () {
     		});
 
     	chart = new Chart_1({
-    			props: { specs: /*specs*/ ctx[3] },
+    			props: {
+    				specs: /*specs*/ ctx[3],
+    				dark: /*dark*/ ctx[4]
+    			},
     			$$inline: true
     		});
 
@@ -16330,13 +16367,13 @@ var app = (function () {
     			div2 = element("div");
     			create_component(macros.$$.fragment);
     			attr_dev(div0, "class", "text-center text-3xl leading-loose");
-    			add_location(div0, file, 104, 1, 2524);
+    			add_location(div0, file, 133, 1, 3289);
     			attr_dev(div1, "class", "w-full flex items-center");
-    			add_location(div1, file, 109, 2, 2665);
+    			add_location(div1, file, 138, 2, 3430);
     			attr_dev(div2, "class", "w-full text-center");
-    			add_location(div2, file, 112, 2, 2736);
+    			add_location(div2, file, 141, 2, 3508);
     			attr_dev(div3, "class", "lg:flex lg:items-stretch");
-    			add_location(div3, file, 108, 1, 2624);
+    			add_location(div3, file, 137, 1, 3389);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -16361,6 +16398,7 @@ var app = (function () {
     			labels.$set(labels_changes);
     			const chart_changes = {};
     			if (dirty & /*specs*/ 8) chart_changes.specs = /*specs*/ ctx[3];
+    			if (dirty & /*dark*/ 16) chart_changes.dark = /*dark*/ ctx[4];
     			chart.$set(chart_changes);
     			const macros_changes = {};
     			if (dirty & /*result*/ 1) macros_changes.result = /*result*/ ctx[0];
@@ -16397,14 +16435,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(104:0) {#if result}",
+    		source: "(133:0) {#if result}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (116:0) {#if isLoading}
+    // (145:0) {#if isLoading}
     function create_if_block(ctx) {
     	let div;
     	let jumper;
@@ -16425,7 +16463,7 @@ var app = (function () {
     			div = element("div");
     			create_component(jumper.$$.fragment);
     			attr_dev(div, "class", "spinner-item");
-    			add_location(div, file, 116, 1, 2825);
+    			add_location(div, file, 145, 1, 3597);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -16451,7 +16489,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(116:0) {#if isLoading}",
+    		source: "(145:0) {#if isLoading}",
     		ctx
     	});
 
@@ -16460,10 +16498,19 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let form;
-    	let div;
-    	let textarea;
+    	let div3;
+    	let label;
+    	let div2;
+    	let input;
     	let t0;
+    	let div0;
     	let t1;
+    	let div1;
+    	let t2;
+    	let div4;
+    	let textarea;
+    	let t3;
+    	let t4;
     	let if_block1_anchor;
     	let current;
     	let mounted;
@@ -16474,42 +16521,76 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			form = element("form");
-    			div = element("div");
-    			textarea = element("textarea");
+    			div3 = element("div");
+    			label = element("label");
+    			div2 = element("div");
+    			input = element("input");
     			t0 = space();
-    			if (if_block0) if_block0.c();
+    			div0 = element("div");
     			t1 = space();
+    			div1 = element("div");
+    			t2 = space();
+    			div4 = element("div");
+    			textarea = element("textarea");
+    			t3 = space();
+    			if (if_block0) if_block0.c();
+    			t4 = space();
     			if (if_block1) if_block1.c();
     			if_block1_anchor = empty();
-    			attr_dev(textarea, "class", "appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none text-center focus:underline text-xl");
+    			attr_dev(input, "type", "checkbox");
+    			attr_dev(input, "id", "toggleB");
+    			attr_dev(input, "class", "sr-only");
+    			add_location(input, file, 110, 4, 2583);
+    			attr_dev(div0, "class", "block bg-gray-600 w-14 h-8 rounded-full");
+    			add_location(div0, file, 112, 4, 2691);
+    			attr_dev(div1, "class", "dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition");
+    			add_location(div1, file, 114, 4, 2768);
+    			attr_dev(div2, "class", "relative");
+    			add_location(div2, file, 108, 3, 2537);
+    			attr_dev(label, "for", "toggleB");
+    			attr_dev(label, "class", "flex items-center cursor-pointer");
+    			add_location(label, file, 103, 2, 2443);
+    			attr_dev(div3, "class", "flex items-center justify-center w-full mb-4");
+    			add_location(div3, file, 102, 1, 2382);
+    			attr_dev(textarea, "class", "appearance-none bg-transparent border-none w-full dark:text-white text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none text-center focus:underline text-xl");
     			attr_dev(textarea, "placeholder", "Ingredients");
     			attr_dev(textarea, "id", "ingredients");
     			attr_dev(textarea, "name", "ingredients");
-    			add_location(textarea, file, 92, 2, 2205);
-    			attr_dev(div, "class", "flex items-center border-b border-teal-500 py-2");
-    			add_location(div, file, 91, 1, 2141);
+    			add_location(textarea, file, 121, 2, 2954);
+    			attr_dev(div4, "class", "flex items-center border-b border-teal-500 py-2");
+    			add_location(div4, file, 120, 1, 2890);
     			attr_dev(form, "class", "w-full");
-    			add_location(form, file, 90, 0, 2118);
+    			add_location(form, file, 100, 0, 2340);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, form, anchor);
-    			append_dev(form, div);
-    			append_dev(div, textarea);
+    			append_dev(form, div3);
+    			append_dev(div3, label);
+    			append_dev(label, div2);
+    			append_dev(div2, input);
+    			append_dev(div2, t0);
+    			append_dev(div2, div0);
+    			append_dev(div2, t1);
+    			append_dev(div2, div1);
+    			append_dev(form, t2);
+    			append_dev(form, div4);
+    			append_dev(div4, textarea);
     			set_input_value(textarea, /*ing*/ ctx[1]);
-    			insert_dev(target, t0, anchor);
+    			insert_dev(target, t3, anchor);
     			if (if_block0) if_block0.m(target, anchor);
-    			insert_dev(target, t1, anchor);
+    			insert_dev(target, t4, anchor);
     			if (if_block1) if_block1.m(target, anchor);
     			insert_dev(target, if_block1_anchor, anchor);
     			current = true;
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(textarea, "keyup", /*debounce*/ ctx[4], false, false, false),
-    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[5])
+    					listen_dev(input, "click", /*addDarkModeSelector*/ ctx[6], false, false, false),
+    					listen_dev(textarea, "keyup", /*debounce*/ ctx[5], false, false, false),
+    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[7])
     				];
 
     				mounted = true;
@@ -16531,7 +16612,7 @@ var app = (function () {
     					if_block0 = create_if_block_1(ctx);
     					if_block0.c();
     					transition_in(if_block0, 1);
-    					if_block0.m(t1.parentNode, t1);
+    					if_block0.m(t4.parentNode, t4);
     				}
     			} else if (if_block0) {
     				group_outros();
@@ -16577,9 +16658,9 @@ var app = (function () {
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(form);
-    			if (detaching) detach_dev(t0);
+    			if (detaching) detach_dev(t3);
     			if (if_block0) if_block0.d(detaching);
-    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(t4);
     			if (if_block1) if_block1.d(detaching);
     			if (detaching) detach_dev(if_block1_anchor);
     			mounted = false;
@@ -16605,6 +16686,7 @@ var app = (function () {
     	let ing = "100 g rice, 2 banana";
     	let isLoading = false;
     	let specs = [];
+    	let dark = false;
 
     	const getRandomColor = () => {
     		var letters = "0123456789ABCDEF";
@@ -16687,6 +16769,17 @@ var app = (function () {
     	};
 
     	getData();
+
+    	const addDarkModeSelector = () => {
+    		if (!dark) {
+    			document.documentElement.classList.add("mode-dark");
+    		} else {
+    			document.documentElement.classList.remove("mode-dark");
+    		}
+
+    		$$invalidate(4, dark = !dark);
+    	};
+
     	const writable_props = [];
 
     	Object_1.keys($$props).forEach(key => {
@@ -16711,10 +16804,12 @@ var app = (function () {
     		ing,
     		isLoading,
     		specs,
+    		dark,
     		getRandomColor,
     		mapNutriments,
     		debounce,
-    		getData
+    		getData,
+    		addDarkModeSelector
     	});
 
     	$$self.$inject_state = $$props => {
@@ -16723,13 +16818,23 @@ var app = (function () {
     		if ("ing" in $$props) $$invalidate(1, ing = $$props.ing);
     		if ("isLoading" in $$props) $$invalidate(2, isLoading = $$props.isLoading);
     		if ("specs" in $$props) $$invalidate(3, specs = $$props.specs);
+    		if ("dark" in $$props) $$invalidate(4, dark = $$props.dark);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [result, ing, isLoading, specs, debounce, textarea_input_handler];
+    	return [
+    		result,
+    		ing,
+    		isLoading,
+    		specs,
+    		dark,
+    		debounce,
+    		addDarkModeSelector,
+    		textarea_input_handler
+    	];
     }
 
     class App extends SvelteComponentDev {
