@@ -39,4 +39,4 @@ this.addEventListener('activate', function (event) {
             }));
         })
     );
-}); w
+});
