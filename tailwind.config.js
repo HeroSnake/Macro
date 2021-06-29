@@ -1,7 +1,7 @@
 module.exports = {
     purge: {
-        enabled: !process.env.ROLLUP_WATCH,
-        content: ['./public/index.html', './src/**/*.svelte'],
+        enabled: false,
+        content: ['./public/index.html', './src/**/*.svelte', './src/**/*.js'],
         options: {
             defaultExtractor: content => [
                 ...(content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []),

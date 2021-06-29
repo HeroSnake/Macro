@@ -108,7 +108,7 @@
 	<Labels {result} />
 	<div class="lg:flex lg:items-stretch">
 		<div class="w-full flex items-center">
-			<Chart {result} {specs} />
+			<Chart {specs} />
 		</div>
 		<div class="w-full text-center"><Macros {result} /></div>
 	</div>

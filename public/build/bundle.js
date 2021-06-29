@@ -15510,7 +15510,7 @@ var app = (function () {
     		c: function create() {
     			canvas = element("canvas");
     			attr_dev(canvas, "id", "donutChart");
-    			add_location(canvas, file$4, 56, 0, 1471);
+    			add_location(canvas, file$4, 56, 0, 1463);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -15540,7 +15540,7 @@ var app = (function () {
     function instance$4($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("Chart", slots, []);
-    	let { result } = $$props, { specs } = $$props;
+    	let { specs } = $$props;
 
     	let specsTitle = specs.map(function (x) {
     		return x[0];
@@ -15589,20 +15589,18 @@ var app = (function () {
     	//     donutChart.canvas.parentNode.style.width = "300px";
 
     	setTimeout(setChart, 20);
-    	const writable_props = ["result", "specs"];
+    	const writable_props = ["specs"];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Chart> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$$set = $$props => {
-    		if ("result" in $$props) $$invalidate(0, result = $$props.result);
-    		if ("specs" in $$props) $$invalidate(1, specs = $$props.specs);
+    		if ("specs" in $$props) $$invalidate(0, specs = $$props.specs);
     	};
 
     	$$self.$capture_state = () => ({
     		Chart,
-    		result,
     		specs,
     		specsTitle,
     		specsColors,
@@ -15613,8 +15611,7 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ("result" in $$props) $$invalidate(0, result = $$props.result);
-    		if ("specs" in $$props) $$invalidate(1, specs = $$props.specs);
+    		if ("specs" in $$props) $$invalidate(0, specs = $$props.specs);
     		if ("specsTitle" in $$props) specsTitle = $$props.specsTitle;
     		if ("specsColors" in $$props) specsColors = $$props.specsColors;
     		if ("specsValues" in $$props) specsValues = $$props.specsValues;
@@ -15626,13 +15623,13 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [result, specs];
+    	return [specs];
     }
 
     class Chart_1 extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$4, create_fragment$4, safe_not_equal, { result: 0, specs: 1 });
+    		init(this, options, instance$4, create_fragment$4, safe_not_equal, { specs: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -15644,21 +15641,9 @@ var app = (function () {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*result*/ ctx[0] === undefined && !("result" in props)) {
-    			console.warn("<Chart> was created without expected prop 'result'");
-    		}
-
-    		if (/*specs*/ ctx[1] === undefined && !("specs" in props)) {
+    		if (/*specs*/ ctx[0] === undefined && !("specs" in props)) {
     			console.warn("<Chart> was created without expected prop 'specs'");
     		}
-    	}
-
-    	get result() {
-    		throw new Error("<Chart>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set result(value) {
-    		throw new Error("<Chart>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	get specs() {
@@ -16322,10 +16307,7 @@ var app = (function () {
     		});
 
     	chart = new Chart_1({
-    			props: {
-    				result: /*result*/ ctx[0],
-    				specs: /*specs*/ ctx[3]
-    			},
+    			props: { specs: /*specs*/ ctx[3] },
     			$$inline: true
     		});
 
@@ -16352,7 +16334,7 @@ var app = (function () {
     			attr_dev(div1, "class", "w-full flex items-center");
     			add_location(div1, file, 109, 2, 2665);
     			attr_dev(div2, "class", "w-full text-center");
-    			add_location(div2, file, 112, 2, 2745);
+    			add_location(div2, file, 112, 2, 2736);
     			attr_dev(div3, "class", "lg:flex lg:items-stretch");
     			add_location(div3, file, 108, 1, 2624);
     		},
@@ -16378,7 +16360,6 @@ var app = (function () {
     			if (dirty & /*result*/ 1) labels_changes.result = /*result*/ ctx[0];
     			labels.$set(labels_changes);
     			const chart_changes = {};
-    			if (dirty & /*result*/ 1) chart_changes.result = /*result*/ ctx[0];
     			if (dirty & /*specs*/ 8) chart_changes.specs = /*specs*/ ctx[3];
     			chart.$set(chart_changes);
     			const macros_changes = {};
@@ -16444,7 +16425,7 @@ var app = (function () {
     			div = element("div");
     			create_component(jumper.$$.fragment);
     			attr_dev(div, "class", "spinner-item");
-    			add_location(div, file, 116, 1, 2834);
+    			add_location(div, file, 116, 1, 2825);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);

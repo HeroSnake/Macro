@@ -1,7 +1,7 @@
 <script>
     import Chart from "chart.js/auto";
 
-    export let result, specs;
+    export let specs;
 
     let specsTitle = specs.map(function (x) {
         return x[0];
