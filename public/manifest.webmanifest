@@ -1,0 +1,17 @@
+{
+    "short_name": "Macro",
+    "name": "Macro",
+    "description": "Nutrition App",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": "http://localhost:5000/",
+    "background_color": "white",
+    "display": "standalone",
+    "theme_color": "white"
+}
