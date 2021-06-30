@@ -6,6 +6,7 @@
 	import Labels from "./Labels.svelte";
 	import Macros from "./Macros.svelte";
 	import Infos from "./Infos.svelte";
+	import ToggleDark from "./Toggle.svelte";
 	import "./css/global.css";
 
 	let result,
@@ -87,37 +88,10 @@
 		isLoading = false;
 	};
 	getData();
-
-	const addDarkModeSelector = () => {
-		if (!dark) {
-			document.documentElement.classList.add("mode-dark");
-		} else {
-			document.documentElement.classList.remove("mode-dark");
-		}
-		dark = !dark;
-	};
 </script>
 
 <form class="w-full">
-	<!-- Toggle B -->
-	<div class="flex items-center justify-center w-full mb-4">
-		<label
-			for="toggleB"
-			class="flex items-center cursor-pointer"
-		>
-			<!-- toggle -->
-			<div class="relative">
-				<!-- input -->
-				<input type="checkbox" on:click={addDarkModeSelector} id="toggleB" class="sr-only" />
-				<!-- line -->
-				<div class="block bg-gray-600 w-14 h-8 rounded-full" />
-				<!-- dot -->
-				<div
-					class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"
-				/>
-			</div>
-		</label>
-	</div>
+	<ToggleDark bind:dark={dark} />
 	<div class="flex items-center border-b border-teal-500 py-2">
 		<textarea
 			class="appearance-none bg-transparent border-none w-full dark:text-white text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none text-center focus:underline text-xl"
