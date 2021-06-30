@@ -21,7 +21,7 @@
                 type="checkbox"
                 on:click={addDarkModeSelector}
                 id="toggleB"
-                class="sr-only outline-none"
+                class="sr-only"
             />
             <!-- line -->
             <div class="block bg-gray-600 w-14 h-8 rounded-full" />

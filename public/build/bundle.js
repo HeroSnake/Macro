@@ -16338,12 +16338,12 @@ var app = (function () {
     			div1 = element("div");
     			attr_dev(input, "type", "checkbox");
     			attr_dev(input, "id", "toggleB");
-    			attr_dev(input, "class", "sr-only outline-none");
+    			attr_dev(input, "class", "sr-only");
     			add_location(input, file$1, 19, 12, 530);
     			attr_dev(div0, "class", "block bg-gray-600 w-14 h-8 rounded-full");
-    			add_location(div0, file$1, 26, 12, 743);
+    			add_location(div0, file$1, 26, 12, 730);
     			attr_dev(div1, "class", "dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition");
-    			add_location(div1, file$1, 28, 12, 836);
+    			add_location(div1, file$1, 28, 12, 823);
     			attr_dev(div2, "class", "relative");
     			add_location(div2, file$1, 17, 8, 468);
     			attr_dev(label, "for", "toggleB");

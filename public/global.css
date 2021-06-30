@@ -66,3 +66,7 @@ input:checked~.dot {
 	transform: translateX(100%);
 	background-color: #FF3E00;
 }
+
+input, textarea, button, select, a {
+	-webkit-tap-highlight-color: transparent;
+}
