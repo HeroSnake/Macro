@@ -5,3 +5,9 @@ var app = new App({
 });
 
 export default app;
+
+window.onload = function () {
+	if (localStorage.getItem("dark")) {
+		document.getElementById("toggleB").click();
+	}
+};
