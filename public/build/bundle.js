@@ -16315,7 +16315,7 @@ var app = (function () {
     const { Object: Object_1 } = globals;
     const file = "src/App.svelte";
 
-    // (129:0) {#if result}
+    // (131:0) {#if result}
     function create_if_block_1(ctx) {
     	let div0;
     	let infos;
@@ -16367,13 +16367,13 @@ var app = (function () {
     			div2 = element("div");
     			create_component(macros.$$.fragment);
     			attr_dev(div0, "class", "text-center text-3xl leading-loose");
-    			add_location(div0, file, 129, 1, 3173);
+    			add_location(div0, file, 131, 1, 3271);
     			attr_dev(div1, "class", "w-full flex items-center");
-    			add_location(div1, file, 134, 2, 3314);
+    			add_location(div1, file, 136, 2, 3412);
     			attr_dev(div2, "class", "w-full text-center");
-    			add_location(div2, file, 137, 2, 3392);
+    			add_location(div2, file, 139, 2, 3490);
     			attr_dev(div3, "class", "lg:flex lg:items-stretch");
-    			add_location(div3, file, 133, 1, 3273);
+    			add_location(div3, file, 135, 1, 3371);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -16435,14 +16435,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(129:0) {#if result}",
+    		source: "(131:0) {#if result}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (141:0) {#if isLoading}
+    // (143:0) {#if isLoading}
     function create_if_block(ctx) {
     	let div;
     	let jumper;
@@ -16463,7 +16463,7 @@ var app = (function () {
     			div = element("div");
     			create_component(jumper.$$.fragment);
     			attr_dev(div, "class", "spinner-item");
-    			add_location(div, file, 141, 1, 3481);
+    			add_location(div, file, 143, 1, 3579);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -16489,7 +16489,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(141:0) {#if isLoading}",
+    		source: "(143:0) {#if isLoading}",
     		ctx
     	});
 
@@ -16540,27 +16540,27 @@ var app = (function () {
     			attr_dev(input, "type", "checkbox");
     			attr_dev(input, "id", "toggleB");
     			attr_dev(input, "class", "sr-only");
-    			add_location(input, file, 101, 4, 2448);
+    			add_location(input, file, 103, 4, 2546);
     			attr_dev(div0, "class", "block bg-gray-600 w-14 h-8 rounded-full");
-    			add_location(div0, file, 108, 4, 2575);
+    			add_location(div0, file, 110, 4, 2673);
     			attr_dev(div1, "class", "dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition");
-    			add_location(div1, file, 110, 4, 2652);
+    			add_location(div1, file, 112, 4, 2750);
     			attr_dev(div2, "class", "relative");
-    			add_location(div2, file, 99, 3, 2402);
+    			add_location(div2, file, 101, 3, 2500);
     			attr_dev(label, "for", "toggleB");
     			attr_dev(label, "class", "flex items-center cursor-pointer");
-    			add_location(label, file, 97, 2, 2317);
+    			add_location(label, file, 99, 2, 2415);
     			attr_dev(div3, "class", "flex items-center justify-center w-full mb-4");
-    			add_location(div3, file, 96, 1, 2256);
+    			add_location(div3, file, 98, 1, 2354);
     			attr_dev(textarea, "class", "appearance-none bg-transparent border-none w-full dark:text-white text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none text-center focus:underline text-xl");
     			attr_dev(textarea, "placeholder", "Ingredients");
     			attr_dev(textarea, "id", "ingredients");
     			attr_dev(textarea, "name", "ingredients");
-    			add_location(textarea, file, 117, 2, 2838);
+    			add_location(textarea, file, 119, 2, 2936);
     			attr_dev(div4, "class", "flex items-center border-b border-teal-500 py-2");
-    			add_location(div4, file, 116, 1, 2774);
+    			add_location(div4, file, 118, 1, 2872);
     			attr_dev(form, "class", "w-full");
-    			add_location(form, file, 94, 0, 2214);
+    			add_location(form, file, 96, 0, 2312);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -16689,9 +16689,11 @@ var app = (function () {
     	let dark = false;
 
     	const mapNutriments = () => {
+    		let forbidden_elements = ["Saturated", "Monounsaturated", "Polyunsaturated", "Sugars", "Water"];
+
     		$$invalidate(3, specs = [
-    			["Fat & Saturated", "#d4b924", 0],
-    			["Carbs & Sugars", "#81a695", 0],
+    			["Fat", "#d4b924", 0],
+    			["Carbs", "#81a695", 0],
     			["Fiber", "#6dd424", 0],
     			["Protein", "#d45924", 0],
     			["Others", "#e7d3fe", 0]
@@ -16718,7 +16720,7 @@ var app = (function () {
     					}
     				});
 
-    				if (other && nutrient.label != "Water") {
+    				if (other && !forbidden_elements.includes(nutrient.label)) {
     					$$invalidate(3, specs[4][2] += quantity, specs);
     				}
     			}

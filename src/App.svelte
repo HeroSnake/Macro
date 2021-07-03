@@ -16,9 +16,11 @@
 	let dark = false;
 
 	const mapNutriments = () => {
+		let forbidden_elements = ["Saturated", "Monounsaturated", "Polyunsaturated", "Sugars", "Water"];
+
 		specs = [
-			["Fat & Saturated", "#d4b924", 0],
-			["Carbs & Sugars", "#81a695", 0],
+			["Fat", "#d4b924", 0],
+			["Carbs", "#81a695", 0],
 			["Fiber", "#6dd424", 0],
 			["Protein", "#d45924", 0],
 			["Others", "#e7d3fe", 0],
@@ -41,7 +43,7 @@
 						spec[2] += quantity;
 					}
 				});
-				if (other && nutrient.label != "Water") {
+				if (other && !forbidden_elements.includes(nutrient.label)) {
 					specs[4][2] += quantity;
 				}
 			}
