@@ -10,7 +10,7 @@
 
 	let result,
 		timer = null;
-	let ing = "100 g rice, 2 banana";
+	let ing = localStorage.getItem("ingredients") ? localStorage.getItem("ingredients") : "100 g rice, 2 banana";
 	let isLoading = false;
 	let specs = [];
 	let dark = false;
@@ -80,6 +80,7 @@
 			.catch(() => null);
 		mapNutriments();
 		isLoading = false;
+		localStorage.setItem("ingredients", ing);
 	};
 	const toggleDarkMode = () => {
 		if (!dark) {
