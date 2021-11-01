@@ -1,11 +1,11 @@
 <script>
-    export let result;
+    export let result
 
     let labelsList = [
-        [result.healthLabels, "green"],
-        [result.dietLabels, "yellow"],
-        [result.cautions, "red"],
-    ];
+        [result.data.healthLabels, "green"],
+        [result.data.dietLabels, "yellow"],
+        [result.data.cautions, "red"],
+    ]
 </script>
 
 {#each labelsList as labelList}

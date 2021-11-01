@@ -6,6 +6,7 @@ div.scrollmenu {
     overflow: auto;
     white-space: nowrap;
     text-align: center;
+    width: 100%;
 }
 div.scrollmenu div {
     display: inline-block;

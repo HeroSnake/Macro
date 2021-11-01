@@ -1,21 +1,22 @@
 <script>
-    import Chart from "chart.js/auto";
+    import Chart from "chart.js/auto"
 
-    export let specs, dark;
+    export let result, dark, i
+    let specs = result.specs
 
     let specsTitle = specs.map(function (x) {
-        return x[0];
-    });
+        return x[0]
+    })
     let specsColors = specs.map(function (x) {
-        return x[1];
-    });
+        return x[1]
+    })
     let specsValues = specs.map(function (x) {
-        return x[2];
-    });
+        return x[2]
+    })
 
-    var chart = null;
+    var chartDonut = null
 
-    let config = {
+    let donutConfig = {
         type: "doughnut",
         data: {
             labels: specsTitle,
@@ -42,21 +43,26 @@
                 },
             },
         },
-    };
-    let updateCharts = (chart) => {
-        if(chart){
-            chart.options.plugins.legend.labels.color = dark ? "white" : "black";
-            chart.data.datasets[0].borderColor = dark ? "#1f2937" : "white";
-            chart.update();
-        }else{
-            return false;
+    }
+
+    let updateCharts = (chartDonut) => {
+        if (chartDonut) {
+            chartDonut.options.plugins.legend.labels.color = dark
+                ? "white"
+                : "black"
+            chartDonut.data.datasets[0].borderColor = dark
+                ? "#1f2937"
+                : "white"
+            chartDonut.update()
+        } else {
+            return false
         }
-    };
+    }
     const setChart = () => {
-        chart = new Chart(document.getElementById("chart"), config);
-    };
-    $: dark,updateCharts(chart);
-    setTimeout(setChart, 20);
+        chartDonut = new Chart(document.getElementById("chartDonut"+i), donutConfig)
+    }
+    $: dark,updateCharts(chartDonut)
+    setTimeout(setChart, 20)
 </script>
 
-<canvas id="chart" />
+<canvas id="chartDonut{i}" />
