@@ -1,5 +1,5 @@
 <script>
-    export let result
+    export let result, isPhone
 </script>
 
 <span>

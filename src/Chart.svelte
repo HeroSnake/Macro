@@ -1,7 +1,7 @@
 <script>
     import Chart from "chart.js/auto"
 
-    export let result, dark, i
+    export let result, dark, isPhone, compare, i
     let specs = result.specs
 
     let specsTitle = specs.map(function (x) {
@@ -27,6 +27,7 @@
                     backgroundColor: specsColors,
                     hoverOffset: 6,
                     borderColor: dark ? "#1f2937" : "white",
+                    borderWidth: isPhone || compare ? 1 : 3
                 },
             ],
         },
@@ -36,12 +37,14 @@
                     labels: {
                         // This more specific font property overrides the global property
                         font: {
+                            size: isPhone && compare ? '7px' : '10px',
                             family: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
                         },
                         color: dark ? "white" : "black",
                     },
                 },
             },
+            responsive: true
         },
     }
 

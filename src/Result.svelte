@@ -4,18 +4,19 @@
 	import Macros from "./Macros.svelte"
 	import Infos from "./Infos.svelte"
 
-    export let result, dark, compare, i
+    export let result, dark, compare, isPhone, i
+    console.log(isPhone)
 </script>
 
 <div class="text-center leading-loose {compare ? '' : 'text-2xl'}">
-    <Infos {result}/>
+    <Infos {result} {isPhone}/>
 </div>
-<Labels {result} />
-<div class="lg:flex lg:items-stretch">
+<Labels {result} {isPhone} {compare} />
+<div class="lg:flex flex-col lg:items-stretch">
     <div class="w-full flex items-center">
-        <Chart {result} {dark} {i} />
+        <Chart {result} {dark} {isPhone} {compare} {i} />
     </div>
-    <div class="w-full text-center {compare ? 'text-xs' : ''}">
+    <div class="w-full text-center {isPhone ? 'text-xs' : ''}">
             <Macros {result} />
     </div>
 </div>
