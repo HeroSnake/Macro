@@ -1,27 +1,34 @@
 {
-  "name": "svelte-vite-tailwind",
-  "version": "0.0.0",
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv public --no-clear"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "latest",
-    "@svitejs/vite-plugin-svelte": "^0.11.1",
-    "autoprefixer": "^10.2.5",
-    "postcss": "^8.2.8",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.5",
     "postcss-load-config": "^3.1.0",
     "postcss-nesting": "^7.0.1",
-    "svelte": "^3.35.0",
-    "svelte-awesome": "^2.4.2",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.1.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.0.0",
+    "svelte-awesome": "latest",
     "svelte-loading-spinners": "latest",
     "svelte-preprocess": "^4.7.3",
-    "tailwindcss": "^2.0.4",
-    "tailwindcss-dark-mode": "^1.1.7",
-    "vite": "^2.1.0"
+    "tailwindcss": "^2.2.4",
+    "tailwindcss-dark-mode": "^1.1.7"
   },
   "dependencies": {
+    "@tailwindcss/ui": "^0.7.2",
     "chart.js": "^3.3.2",
     "sirv-cli": "^1.0.0"
   }
