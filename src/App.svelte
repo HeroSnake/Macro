@@ -2,7 +2,7 @@
 	import Icon from "svelte-awesome"
 	import { faCompressAlt } from "@fortawesome/free-solid-svg-icons"
 	import { Jumper } from "svelte-loading-spinners"
-	import ChartCompare from "./ChartCompare.svelte"
+	import ChartCompare from "./ChartComparison.svelte"
 	import Result from "./Result.svelte"
 	import "./css/global.css"
 	import './lib/TailwindCSS.svelte'
