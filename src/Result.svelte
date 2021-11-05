@@ -5,7 +5,6 @@
 	import Infos from "./Infos.svelte"
 
     export let result, dark, compare, isPhone, i
-    console.log(isPhone)
 </script>
 
 <div class="text-center leading-loose {compare ? '' : 'text-2xl'}">

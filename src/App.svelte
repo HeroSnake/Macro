@@ -24,13 +24,13 @@
 	}
 
 	const mapNutriments = (index) => {
-		let forbidden_elements = ["Saturated", "Monounsaturated", "Polyunsaturated", "Sugars", "Water"]
+		let forbidden_elements = ["Water"]
 		results[index].specs = [
-			["Fat", "#d4b924", 0],
-			["Carbs", "#81a695", 0],
-			["Fiber", "#6dd424", 0],
-			["Protein", "#d45924", 0],
-			["Others", "#e7d3fe", 0]
+			["Fat", "#d4b924", 0, ["Total lipid (fat)","Fatty acids, total saturated","Fatty acids, total monounsaturated", "Fatty acids, total polyunsaturated"]],
+			["Carbs", "#81a695", 0, ["Carbohydrate, by difference"]],
+			["Fiber", "#6dd424", 0, ["Fiber, total dietary"]],
+			["Protein", "#d45924", 0, ["Protein"]],
+			["Others", "#e7d3fe", 0, ["Others"]]
 		]
 		for (const nutrient of Object.values(results[index].data.totalNutrients)) {
 			if (nutrient.unit != "kcal") {
@@ -45,7 +45,7 @@
 						break
 				}
 				results[index].specs.forEach((spec) => {
-					if (spec[0].includes(nutrient.label)) {
+					if (spec[3].includes(nutrient.label)) {
 						other = false
 						spec[2] += quantity
 					}
