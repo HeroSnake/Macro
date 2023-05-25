@@ -2,7 +2,7 @@
     export let result
 </script>
 
-<table class="table-auto">
+<table class="table-auto w-full">
     <tbody>
         {#each Object.values(result.data.totalNutrients) as Nutrient}
             {#if Nutrient.quantity > 0}

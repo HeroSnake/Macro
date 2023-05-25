@@ -25,15 +25,15 @@
 
 	const mapNutriments = (index) => {
 		results[index].specs = {
-			Fat: { color: "#d4b924", quantity: 0, nutrients: ["Total lipid (fat)","Fatty acids, total saturated","Fatty acids, total monounsaturated", "Fatty acids, total polyunsaturated"] },
-			Carbs: { color: "#81a695", quantity: 0, nutrients: ["Carbohydrate, by difference"] },
-			Fiber: { color: "#6dd424", quantity: 0, nutrients: ["Fiber, total dietary"] },
-			Protein: { color: "#d45924", quantity: 0, nutrients: ["Protein"] },
+			Fat: { color: "#d4b924", quantity: 0, nutrients: ["FAT","FASAT","FATRN","FAMS","FAPU"] },
+			Carbs: { color: "#81a695", quantity: 0, nutrients: ["CHOCDF","CHOCDF.net","SUGAR"] },
+			Fiber: { color: "#6dd424", quantity: 0, nutrients: ["FIBTG"] },
+			Protein: { color: "#d45924", quantity: 0, nutrients: ["PROCNT"] },
 			// Water: { color: "#03c2fc", quantity: 0, nutrients: ["Water"] },
 			// Others: { color: "#e7d3fe", quantity: 0, nutrients: ["Others"] }
 		}
 
-		for (const nutrient of Object.values(results[index].data.totalNutrients)) {
+		for (const [key, nutrient] of Object.entries(results[index].data.totalNutrients)) {
 			if (nutrient.unit != "kcal") {
 				let other = true
 				let quantity = parseFloat(nutrient.quantity)
@@ -46,7 +46,7 @@
 						break
 				}
 				Object.values(results[index].specs).forEach((spec) => {
-					if (spec.nutrients.includes(nutrient.label)) {
+					if (spec.nutrients.includes(key)) {
 						other = false
 						spec.quantity += quantity
 					}
