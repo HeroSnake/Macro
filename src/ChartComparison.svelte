@@ -3,13 +3,10 @@
 
     export let results, ingredients, dark
 
-    let specsTitle = results[0].specs.map(function (x) {
-        return x[0]
-    })
     let specsValues = []
     results.forEach((result, index) => {
-        specsValues[index] = result.specs.map(function (x) {
-            return x[2]
+        specsValues[index] = Object.values(result.specs).map((spec) => {
+            return spec.quantity
         })
     })
 
@@ -19,7 +16,7 @@
     let radarConfig = {
         type: "bar",
         data: {
-            labels: specsTitle,
+            labels: Object.keys(results[0].specs),
             datasets: [
                 {
                     label: ingredients[0],

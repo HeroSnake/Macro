@@ -13,7 +13,7 @@
 		localStorage.getItem("ingredients1") ? localStorage.getItem("ingredients1") : "100 g pasta, 100 g courgette",
 	]
 	let isLoading, dark, compare = false
-	let results = [ {data: {}, specs: []}, {data: {}, specs: []}];
+	let results = [ {data: {}, specs: {}}, {data: {}, specs: {}}];
 	let lastIndex = 0
 	let isPhone = false
 
@@ -24,14 +24,15 @@
 	}
 
 	const mapNutriments = (index) => {
-		let forbidden_elements = ["Water"]
-		results[index].specs = [
-			["Fat", "#d4b924", 0, ["Total lipid (fat)","Fatty acids, total saturated","Fatty acids, total monounsaturated", "Fatty acids, total polyunsaturated"]],
-			["Carbs", "#81a695", 0, ["Carbohydrate, by difference"]],
-			["Fiber", "#6dd424", 0, ["Fiber, total dietary"]],
-			["Protein", "#d45924", 0, ["Protein"]],
-			["Others", "#e7d3fe", 0, ["Others"]]
-		]
+		results[index].specs = {
+			Fat: { color: "#d4b924", quantity: 0, nutrients: ["Total lipid (fat)","Fatty acids, total saturated","Fatty acids, total monounsaturated", "Fatty acids, total polyunsaturated"] },
+			Carbs: { color: "#81a695", quantity: 0, nutrients: ["Carbohydrate, by difference"] },
+			Fiber: { color: "#6dd424", quantity: 0, nutrients: ["Fiber, total dietary"] },
+			Protein: { color: "#d45924", quantity: 0, nutrients: ["Protein"] },
+			// Water: { color: "#03c2fc", quantity: 0, nutrients: ["Water"] },
+			// Others: { color: "#e7d3fe", quantity: 0, nutrients: ["Others"] }
+		}
+
 		for (const nutrient of Object.values(results[index].data.totalNutrients)) {
 			if (nutrient.unit != "kcal") {
 				let other = true
@@ -44,22 +45,19 @@
 						quantity = quantity / 1000000
 						break
 				}
-				results[index].specs.forEach((spec) => {
-					if (spec[3].includes(nutrient.label)) {
+				Object.values(results[index].specs).forEach((spec) => {
+					if (spec.nutrients.includes(nutrient.label)) {
 						other = false
-						spec[2] += quantity
+						spec.quantity += quantity
 					}
 				})
-				if (other && !forbidden_elements.includes(nutrient.label)) {
-					results[index].specs[4][2] += quantity
-				}
 			}
 		}
 	}
 	const toggleDarkMode = () => {
 		if (!dark) {
 			document.documentElement.classList.add("mode-dark")
-			localStorage.setItem("dark", true)
+			localStorage.setItem("dark", 'true')
 		} else {
 			document.documentElement.classList.remove("mode-dark")
 			localStorage.removeItem("dark")
@@ -83,7 +81,7 @@
 	}
 	const debounce = () => {
 		clearTimeout(timer)
-		timer = setTimeout(getData(lastIndex), 750)
+		timer = setTimeout(() => getData(lastIndex), 750)
 	}
     const getData = async (index) => {
 		results[index].data = {}
@@ -125,26 +123,19 @@
 
 <form class="w-full">
 	<!-- Toggle B -->
-	<div class="flex items-center justify-center flex-col w-full mb-4">
+	<div class="flex items-center justify-center w-full mb-4 gap-2">
 		<label for="toggleB" class="flex items-center cursor-pointer">
 			<!-- toggle -->
 			<div class="relative">
 				<!-- input -->
-				<input
-					type="checkbox"
-					on:click={toggleDarkMode}
-					id="toggleB"
-					class="sr-only"
-				/>
+				<input type="checkbox" on:click={toggleDarkMode} id="toggleB" class="sr-only" />
 				<!-- line -->
 				<div class="block bg-gray-600 w-14 h-8 rounded-full" />
 				<!-- dot -->
-				<div
-					class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"
-				/>
+				<div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition" />
 			</div>
 		</label>
-		<button type="button" class="flex items-center font-bold py-1 px-2 mt-2 rounded" on:click={toggleCompare}>
+		<button type="button" class="flex items-center font-bold py-1 px-2 rounded" on:click={toggleCompare}>
 			<Icon data={faCompressAlt} scale={2}/>
 		</button>
 	</div>
@@ -177,7 +168,7 @@
 		{/if}
 		<div class="flex">
 			{#each results as result, i}
-				<div class="flex flex-col {compare ? 'w-1/2 px-2' : 'w-full'}">
+				<div class="flex flex-col {compare ? 'w-1/2' : 'w-full'}">
 					{#if !isEmptyObject(result.data) && (i == 0 || compare)}
 						<Result {result} {dark} {compare} {isPhone} {i}/>
 					{/if}

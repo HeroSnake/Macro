@@ -2,11 +2,15 @@
     export let result
 </script>
 
-{#each Object.values(result.data.totalNutrients) as Nutrient}
-    {#if Nutrient.quantity > 0}
-        <div>
-            <b>{Nutrient.label}</b> : {parseFloat(Nutrient.quantity).toFixed(2)}
-            {Nutrient.unit}
-        </div>
-    {/if}
-{/each}
+<table class="table-auto">
+    <tbody>
+        {#each Object.values(result.data.totalNutrients) as Nutrient}
+            {#if Nutrient.quantity > 0}
+                <tr>
+                    <td>{Nutrient.label}</td>
+                    <td>{parseFloat(Nutrient.quantity).toFixed(2)} {Nutrient.unit}</td>
+                </tr>
+            {/if}
+        {/each}
+    </tbody>
+</table>
